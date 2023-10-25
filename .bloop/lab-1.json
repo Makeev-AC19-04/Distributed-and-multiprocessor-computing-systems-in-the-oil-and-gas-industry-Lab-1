@@ -1,0 +1,203 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "lab-1",
+        "directory": "/home/tapok/Документы/scala_projects/lab 1/lab-1",
+        "workspaceDir": "/home/tapok/Документы/scala_projects/lab 1/lab-1",
+        "sources": [
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/src/main/scala",
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/src/main/scala-2.13",
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/src/main/scala-2",
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/src/main/java",
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/target/scala-2.13/src_managed/main"
+        ],
+        "dependencies": [
+            
+        ],
+        "classpath": [
+            "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8.jar",
+            "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/2.1.1/scala-parser-combinators_2.13-2.1.1.jar",
+            "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-async_2.13/1.0.0-M1/scala-async_2.13-1.0.0-M1.jar"
+        ],
+        "out": "/home/tapok/Документы/scala_projects/lab 1/lab-1/.bloop/lab-1",
+        "classesDir": "/home/tapok/Документы/scala_projects/lab 1/lab-1/.bloop/lab-1/scala-2.13/classes",
+        "resources": [
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/src/main/resources",
+            "/home/tapok/Документы/scala_projects/lab 1/lab-1/target/scala-2.13/resource_managed/main"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.13.8",
+            "options": [
+                "-Xasync"
+            ],
+            "jars": [
+                "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8.jar",
+                "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.8/scala-compiler-2.13.8.jar",
+                "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.8/scala-reflect-2.13.8.jar",
+                "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/jline/jline/3.21.0/jline-3.21.0.jar",
+                "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.9.0/jna-5.9.0.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                },
+                {
+                    "names": [
+                        "zio.test.sbt.ZTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "weaver.framework.CatsEffect"
+                    ]
+                },
+                {
+                    "names": [
+                        "hedgehog.sbt.Framework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "/home/tapok/.jabba/jdk/adopt@1.11.0-11",
+                "options": [
+                    "-Duser.dir=/home/tapok/Документы/scala_projects/lab 1/lab-1"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.13.8",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parser-combinators_2.13",
+                    "version": "2.1.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-parser-combinators_2.13",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/2.1.1/scala-parser-combinators_2.13-2.1.1.jar"
+                        },
+                        {
+                            "name": "scala-parser-combinators_2.13",
+                            "classifier": "sources",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/2.1.1/scala-parser-combinators_2.13-2.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-async_2.13",
+                    "version": "1.0.0-M1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-async_2.13",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-async_2.13/1.0.0-M1/scala-async_2.13-1.0.0-M1.jar"
+                        },
+                        {
+                            "name": "scala-async_2.13",
+                            "classifier": "sources",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-async_2.13/1.0.0-M1/scala-async_2.13-1.0.0-M1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.13.8",
+                    "configurations": "optional",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "/home/tapok/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "library"
+        ]
+    }
+}

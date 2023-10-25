@@ -1,0 +1,159 @@
+java.lang.IndexOutOfBoundsException: -1 is out of bounds (min 0, max 2)
+occurred in the presentation compiler.
+
+action parameters:
+uri: file://<HOME>/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/scala_projects/lab%201/lab-1/src/main/scala/Server.scala
+text:
+package ru.asu.DS.lab1
+
+import scala.collection.mutable.ArrayBuffer
+import scala.io.StdIn.readLine
+import scala.async.Async.{async, await}
+import scala.util.{Success, Failure}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import java.net._
+
+class Server {
+  private val bufferSize = 1024
+  private val port = 1503
+  private var running = true
+  private var socket: MulticastSocket = _
+  private var queue: ArrayBuffer[DatagramPacket] = _
+
+  def startServer(): Unit = {
+    queue = new ArrayBuffer[DatagramPacket]
+    socket = new MulticastSocket(port)
+    socket.joinGroup(InetAddress.getByName("233.0.0.1"))
+    println(s"Server started. Listening on port $port.")
+  }
+
+  def recieveMessages(): Future[Unit] = Future {
+    val buffer = new Array[Byte](bufferSize)
+    val receivePacket = new DatagramPacket(buffer, buffer.length)
+    while (running) {
+      try {
+        socket.receive(receivePacket)
+  
+        queue.append(receivePacket)
+//        println(queue.size) - показать число сообщений в очереди
+  
+        val data = new String(receivePacket.getData, 0, receivePacket.getLength)
+        println(s"Received message: $data")
+              
+      } catch {
+        case _: SocketException => running = false
+      }
+    }
+  }
+
+  def sendMessages(): Future[Unit] = Future {
+    while (true){
+      Thread.sleep(10000)
+      if (queue.size > 0){
+        for (i <- queue)
+          {
+            val responseData = i
+            val sendPacket = new DatagramPacket(responseData.getData, responseData.getLength, responseData.getAddress, responseData.getPort)
+            socket.send(sendPacket)
+          }
+        queue.clear()
+      }
+    }
+  }
+
+  def stopServer(): Unit = {
+    if (socket != null && !socket.isClosed) {
+      socket.close()
+      println("Server stopped")
+    }
+  }
+
+  def waitForStop(): Future[Unit] = Future {
+        println("Type anything to close the server.")
+        val input = readLine()
+      }
+}
+
+
+object Server extends App {
+  val server = new Server()
+  server.startServer()
+
+  server.waitForStop() onComplete {
+    case Success(_) => server.stopServer()
+    case Failure(exception) => println(s"An error occurred: ${exception.getMessage}")
+  }
+
+  s
+
+ /* server.recieveMessages() onComplete {
+    case Success(_) => server.stopServer()
+    case Failure(exception) => println(s"An error occurred: ${exception.getMessage}")
+  }
+
+  server.sendMessages() onComplete {
+    case Success(_) => server.stopServer()
+    case Failure(exception) => println(s"An error occurred: ${exception.getMessage}")
+  } */
+  
+}
+
+
+
+error stacktrace:
+scala.collection.mutable.ArrayBuffer.apply(ArrayBuffer.scala:98)
+	scala.reflect.internal.Types$Type.findMemberInternal$1(Types.scala:1030)
+	scala.reflect.internal.Types$Type.findMember(Types.scala:1035)
+	scala.reflect.internal.Types$Type.memberBasedOnName(Types.scala:661)
+	scala.reflect.internal.Types$Type.member(Types.scala:625)
+	scala.tools.nsc.typechecker.Contexts$SymbolLookup.apply(Contexts.scala:1401)
+	scala.tools.nsc.typechecker.Contexts$Context.lookupSymbol(Contexts.scala:1283)
+	scala.tools.nsc.typechecker.Typers$Typer.typedIdent$2(Typers.scala:5470)
+	scala.tools.nsc.typechecker.Typers$Typer.typedIdentOrWildcard$1(Typers.scala:5522)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5983)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedType(Typers.scala:6236)
+	scala.tools.nsc.typechecker.Typers$Typer.typedHigherKindedType(Typers.scala:6243)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typed1$78(Typers.scala:5571)
+	scala.tools.nsc.typechecker.Typers$Typer.typedAppliedTypeTree$1(Typers.scala:5560)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5938)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedType(Typers.scala:6236)
+	scala.tools.nsc.typechecker.Typers$Typer.typedType(Typers.scala:6239)
+	scala.tools.nsc.typechecker.Namers$Namer.methodSig(Namers.scala:1348)
+	scala.tools.nsc.typechecker.Namers$Namer.memberSig(Namers.scala:1929)
+	scala.tools.nsc.typechecker.Namers$Namer.typeSig(Namers.scala:1880)
+	scala.tools.nsc.typechecker.Namers$Namer$MonoTypeCompleter.completeImpl(Namers.scala:874)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete(Namers.scala:2078)
+	scala.tools.nsc.typechecker.Namers$LockingTypeCompleter.complete$(Namers.scala:2076)
+	scala.tools.nsc.typechecker.Namers$TypeCompleterBase.complete(Namers.scala:2071)
+	scala.reflect.internal.Symbols$Symbol.completeInfo(Symbols.scala:1561)
+	scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1533)
+	scala.reflect.internal.Symbols$Symbol.initialize(Symbols.scala:1722)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5625)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedTemplate(Typers.scala:2064)
+	scala.tools.nsc.typechecker.Typers$Typer.typedClassDef(Typers.scala:1895)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5951)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStat$1(Typers.scala:6119)
+	scala.tools.nsc.typechecker.Typers$Typer.$anonfun$typedStats$8(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedStats(Typers.scala:3410)
+	scala.tools.nsc.typechecker.Typers$Typer.typedPackageDef$1(Typers.scala:5634)
+	scala.tools.nsc.typechecker.Typers$Typer.typed1(Typers.scala:5954)
+	scala.tools.nsc.typechecker.Typers$Typer.typed(Typers.scala:6041)
+	scala.tools.nsc.typechecker.Analyzer$typerFactory$TyperPhase.apply(Analyzer.scala:117)
+	scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:459)
+	scala.tools.nsc.interactive.Global$TyperRun.applyPhase(Global.scala:1349)
+	scala.tools.nsc.interactive.Global$TyperRun.typeCheck(Global.scala:1342)
+	scala.tools.nsc.interactive.Global.typeCheck(Global.scala:680)
+	scala.meta.internal.pc.PcCollector.<init>(PcCollector.scala:29)
+	scala.meta.internal.pc.PcSemanticTokensProvider$Collector$.<init>(PcSemanticTokensProvider.scala:18)
+	scala.meta.internal.pc.PcSemanticTokensProvider.Collector$lzycompute$1(PcSemanticTokensProvider.scala:18)
+	scala.meta.internal.pc.PcSemanticTokensProvider.Collector(PcSemanticTokensProvider.scala:18)
+	scala.meta.internal.pc.PcSemanticTokensProvider.provide(PcSemanticTokensProvider.scala:71)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$semanticTokens$1(ScalaPresentationCompiler.scala:151)

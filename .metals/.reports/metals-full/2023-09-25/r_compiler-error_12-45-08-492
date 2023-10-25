@@ -1,0 +1,108 @@
+file%3A%2F%2F%2Fhome%2Ftapok%2F%25D0%2594%25D0%25BE%25D0%25BA%25D1%2583%25D0%25BC%25D0%25B5%25D0%25BD%25D1%2582%25D1%258B%2Fscala_projects%2Flab%25201%2Flab-1%2Fsrc%2Fru.asu.DS.lab1.scala:6: error: illegal start of definition identifier
+public class Server {
+^
+occurred in the presentation compiler.
+
+action parameters:
+uri: file://<HOME>/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/scala_projects/lab%201/lab-1/src/ru.asu.DS.lab1.scala
+text:
+package ru.asu.DS.lab1;
+
+import java.io.*;
+import java.net.*;
+
+public class Server {
+
+private BufferedReader in = null;
+private String str = null;
+private byte[] buffer;
+private DatagramPacket packet;
+private InetAddress address;
+private DatagramSocket socket;
+
+public Server() throws IOException {
+    System.out.println("Sending messages");
+
+// Создается объект DatagramSocket, чтобы
+// принимать запросы клиента
+    socket = new DatagramSocket();
+
+// Вызов метода transmit(), чтобы передавать сообщение всем
+// клиентам, зарегистрированным в группе
+    transmit();
+}
+
+public void transmit() {
+    try {
+    // создается входной поток, чтобы принимать
+    // данные с консоли
+        in = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            System.out.println("Введите строку для передачи клиентам: ");
+        str = in.readLine();
+        buffer = str.getBytes();
+        address = InetAddress.getByName("233.0.0.1");
+        // Посылка пакета датаграмм на порт номер 1502
+        packet = new DatagramPacket(
+                buffer,
+                buffer.length,
+                address,
+                1502);
+
+        //Посылка сообщений всем клиентам в группе
+        socket.send(packet);
+        }
+} catch (Exception e) {
+        e.printStackTrace();
+} finally {
+    try {
+        // Закрытие потока и сокета
+        in.close();
+        socket.close();
+} catch (Exception e) {
+        e.printStackTrace();
+}
+}
+}
+
+public static void main(String arg[]) throws Exception {
+// Запуск сервера
+    new Server();
+}
+}
+
+
+error stacktrace:
+scala.meta.internal.parsers.Reporter.syntaxError(Reporter.scala:16)
+	scala.meta.internal.parsers.Reporter.syntaxError$(Reporter.scala:16)
+	scala.meta.internal.parsers.Reporter$$anon$1.syntaxError(Reporter.scala:22)
+	scala.meta.internal.parsers.Reporter.syntaxError(Reporter.scala:17)
+	scala.meta.internal.parsers.Reporter.syntaxError$(Reporter.scala:17)
+	scala.meta.internal.parsers.Reporter$$anon$1.syntaxError(Reporter.scala:22)
+	scala.meta.internal.parsers.ScalametaParser.statSeqBuf(ScalametaParser.scala:4359)
+	scala.meta.internal.parsers.ScalametaParser.bracelessPackageStats$1(ScalametaParser.scala:4579)
+	scala.meta.internal.parsers.ScalametaParser.$anonfun$batchSource$11(ScalametaParser.scala:4590)
+	scala.meta.internal.parsers.ScalametaParser.autoEndPos(ScalametaParser.scala:349)
+	scala.meta.internal.parsers.ScalametaParser.$anonfun$batchSource$10(ScalametaParser.scala:4590)
+	scala.meta.internal.parsers.ScalametaParser.tryParse(ScalametaParser.scala:201)
+	scala.meta.internal.parsers.ScalametaParser.$anonfun$batchSource$1(ScalametaParser.scala:4582)
+	scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:300)
+	scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:346)
+	scala.meta.internal.parsers.ScalametaParser.batchSource(ScalametaParser.scala:4550)
+	scala.meta.internal.parsers.ScalametaParser.$anonfun$source$1(ScalametaParser.scala:4543)
+	scala.meta.internal.parsers.ScalametaParser.atPos(ScalametaParser.scala:300)
+	scala.meta.internal.parsers.ScalametaParser.autoPos(ScalametaParser.scala:346)
+	scala.meta.internal.parsers.ScalametaParser.source(ScalametaParser.scala:4543)
+	scala.meta.internal.parsers.ScalametaParser.entrypointSource(ScalametaParser.scala:4548)
+	scala.meta.internal.parsers.ScalametaParser.parseSourceImpl(ScalametaParser.scala:127)
+	scala.meta.internal.parsers.ScalametaParser.$anonfun$parseSource$1(ScalametaParser.scala:124)
+	scala.meta.internal.parsers.ScalametaParser.parseRuleAfterBOF(ScalametaParser.scala:51)
+	scala.meta.internal.parsers.ScalametaParser.parseRule(ScalametaParser.scala:46)
+	scala.meta.internal.parsers.ScalametaParser.parseSource(ScalametaParser.scala:124)
+	scala.meta.parsers.Parse$.$anonfun$parseSource$1(Parse.scala:29)
+	scala.meta.parsers.Parse$$anon$1.apply(Parse.scala:36)
+	scala.meta.parsers.Api$XtensionParseDialectInput.parse(Api.scala:25)
+	scala.meta.internal.semanticdb.scalac.ParseOps$XtensionCompilationUnitSource.toSource(ParseOps.scala:17)
+	scala.meta.internal.semanticdb.scalac.TextDocumentOps$XtensionCompilationUnitDocument.toTextDocument(TextDocumentOps.scala:206)
+	scala.meta.internal.pc.SemanticdbTextDocumentProvider.textDocument(SemanticdbTextDocumentProvider.scala:54)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$semanticdbTextDocument$1(ScalaPresentationCompiler.scala:350)

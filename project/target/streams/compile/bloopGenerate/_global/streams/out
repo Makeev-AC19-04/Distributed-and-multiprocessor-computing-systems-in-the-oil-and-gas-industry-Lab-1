@@ -1,0 +1,4 @@
+[debug] [lab-1-build] Classpath dependencies List()
+[debug] [lab-1-build] Dependencies from configurations List()
+[debug] Bloop wrote the configuration of project 'lab-1-build' to '/home/tapok/Документы/scala_projects/lab 1/lab-1/project/.bloop/lab-1-build.json'
+[success] Generated .bloop/lab-1-build.json

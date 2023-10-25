@@ -1,0 +1,69 @@
+java.lang.NullPointerException
+occurred in the presentation compiler.
+
+action parameters:
+offset: 366
+uri: file://<HOME>/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/scala_projects/lab%201/lab-1/src/main/scala/Client.scala
+text:
+package ru.asu.DS.lab1
+
+import java.net._
+import scala.collection.mutable.ArrayBuffer
+
+class Client {
+  private var address: InetAddress = _
+  private var buffer: Array[Byte] = _ //new Array[Byte](10)
+  private var packet: DatagramPacket = _
+  private var str: String = _
+  private var socket: MulticastSocket = _
+
+  //def main(args: Array[String]): Unit = {
+  def ,@@
+    System.out.println("Waiting for messages from server...")
+    try {
+      socket = new MulticastSocket(1502)
+      address = InetAddress.getByName("233.0.0.1")
+      socket.joinGroup(address)
+      while (true) {
+        buffer = new Array[Byte](256)
+        packet = new DatagramPacket(
+          buffer, buffer.length)
+        socket.receive(packet)
+        str = new String(packet.getData())
+        System.out.println(
+          "Recieved new message: " + str.trim()
+          )                    
+      }
+    } catch {
+      case e: Exception => e.printStackTrace()
+    } finally {
+      try {
+        socket.leaveGroup(address)
+        socket.close()
+      } catch {
+        case e: Exception => e.printStackTrace()
+      }
+    }
+  }
+}
+
+
+object Client extends App{
+    try {
+        val client = new Client()
+        client.main()
+    } catch {
+        case e: Exception => e.printStackTrace()
+    }
+}
+
+
+error stacktrace:
+scala.reflect.internal.Definitions$DefinitionsClass.isByNameParamType(Definitions.scala:420)
+	scala.reflect.internal.TreeInfo.isStableIdent(TreeInfo.scala:140)
+	scala.reflect.internal.TreeInfo.isStableIdentifier(TreeInfo.scala:113)
+	scala.reflect.internal.TreeInfo.isPath(TreeInfo.scala:102)
+	scala.tools.nsc.interactive.Global.stabilizedType(Global.scala:974)
+	scala.tools.nsc.interactive.Global.typedTreeAt(Global.scala:822)
+	scala.meta.internal.pc.SignatureHelpProvider.signatureHelp(SignatureHelpProvider.scala:23)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$signatureHelp$1(ScalaPresentationCompiler.scala:276)

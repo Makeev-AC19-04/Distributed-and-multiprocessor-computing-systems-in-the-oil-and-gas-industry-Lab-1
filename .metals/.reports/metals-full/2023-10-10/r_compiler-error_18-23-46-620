@@ -1,0 +1,68 @@
+java.lang.NullPointerException
+occurred in the presentation compiler.
+
+action parameters:
+offset: 1258
+uri: file://<HOME>/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/scala_projects/lab%201/lab-1/src/main/scala/Server.scala
+text:
+package ru.asu.DS.lab1
+
+import scala.io.StdIn.readLine
+import scala.async.Async.{async, await}
+import java.net._
+
+class Server {
+  private val bufferSize = 1024
+  private val port = 1503
+  private var socket: MulticastSocket = _
+  
+
+  def startServer(): Unit = {
+    socket = new MulticastSocket(port)
+    socket.joinGroup(InetAddress.getByName("233.0.0.1"))
+    println(s"Server started. Listening on port $port")
+
+    val buffer = new Array[Byte](bufferSize)
+    val receivePacket = new DatagramPacket(buffer, buffer.length)
+
+    while (true) {
+      socket.receive(receivePacket)
+      val data = new String(receivePacket.getData, 0, receivePacket.getLength)
+      println(s"Received message: $data")
+
+      // Do something with the received data
+
+      // Send a response back to the client
+      val responseData = data.getBytes
+      val sendPacket = new DatagramPacket(responseData, responseData.length, receivePacket.getAddress, receivePacket.getPort)
+      socket.send(sendPacket)
+    }
+  }
+
+  def stopServer(): Unit = {
+    var stopper = readLine()    
+    //if (socket != null && !socket.isClosed) {
+      socket.close()
+      println("Server stopped")
+    //}
+  }
+}
+
+object Server extends App {
+  val server = new Server()
+  var stop = async(new @@Runnable {server.stopServer()})
+  server.startServer()
+}
+
+
+
+
+error stacktrace:
+scala.meta.internal.pc.completions.OverrideCompletions.scala$meta$internal$pc$completions$OverrideCompletions$$getMembers(OverrideCompletions.scala:180)
+	scala.meta.internal.pc.completions.OverrideCompletions.implementAll(OverrideCompletions.scala:392)
+	scala.meta.internal.pc.completions.OverrideCompletions.implementAllFor$1(OverrideCompletions.scala:343)
+	scala.meta.internal.pc.completions.OverrideCompletions.implementAllAt(OverrideCompletions.scala:360)
+	scala.meta.internal.pc.completions.OverrideCompletions.implementAllAt$(OverrideCompletions.scala:332)
+	scala.meta.internal.pc.MetalsGlobal.implementAllAt(MetalsGlobal.scala:33)
+	scala.meta.internal.pc.CompletionProvider.implementAll(CompletionProvider.scala:517)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$implementAbstractMembers$1(ScalaPresentationCompiler.scala:174)
